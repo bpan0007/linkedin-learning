@@ -1,9 +1,24 @@
-all: init lint
-	python ./sum_frequencies.py ./MOCK_DATA.json
+BUILD_NAME       ?= simple
+BUILD_TAG        ?= $(shell git rev-parse --short HEAD)
 
-init:
-	pip install -U pip pylint
-	pip install -r ./requirements.txt
+GITHUB_USER_NAME ?= PUT_YOUR_USER_NAME_HERE
+GITHUB_REPO_NAME ?= PUT_YOUR_REPO_NAME_HERE
+GITHUB_TAG       ?= main
 
-lint:
-	pylint ./sum_frequencies.py
+build:
+	docker build --progress=plain --tag $(BUILD_NAME):$(BUILD_TAG) .
+
+run: build
+	docker run --rm $(BUILD_NAME):$(BUILD_TAG)
+
+test:
+	@docker run --rm $(BUILD_NAME):$(BUILD_TAG) \
+		| grep 'This is a simple python script called from a container image.' \
+		&& echo "TEST PASSED! :D"
+
+github:
+	@docker run --rm ghcr.io/$(GITHUB_USER_NAME)/$(GITHUB_REPO_NAME):$(GITHUB_TAG) \
+		| grep 'This is a simple python script called from a container image.' \
+		&& echo "TEST PASSED! :D"
+
+all: build test

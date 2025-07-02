@@ -1,20 +1,16 @@
-# 02-04 Challenge: Use a matrix strategy to test an application
-You’re working with a data team that’s developing a python application for analyzing survey results.  They have an existing GitHub Actions workflow, but they want to make sure their application runs on Linux, macOS, and windows.  They also want to test for compatibilty with recent versions of Python.
+# 03_03-publishing-container-images
+Use these files to demonstrate publishing a container image to the GitHub Package registry.
 
-Your challenge is to create a workflow with the following attributes:
-- Test the application on Ubuntu, macOS, and Windows
-- Test the application using Python versions 3.7, 3.8, 3.9, and 3.10
-- Add an additional test for Python version 3.6 running on Ubuntu
-- If the platform is Windows, skip any tests for Python version 3.10
-
-Use the following steps to get started:
-1. Create a new repo.
+1. Create a new, public repo.
 1. Add the files from this directory to the root of the new repo.
-1. Move the `python-workflow.yml` file into the `.github/workflows` directory in the new repo.
-1. Check the **Actions** tab.  The workflow has a push trigger so it should have run after the workflow file was committed.  The workflow also has a dispatch trigger that you can use to run the workflow without modifying any files.
-1. Edit the workflow file and add a matrix strategy. You'll know where to add it.
-1. Add matrix keys for `platform` and `version`.
-1. Update the `runs-on` configuration to use the matrix context for `platform`.
-1. Update the `python-version` in the `Set up Python` step to use the matrix context for `version`.
-1. Add an `include` configuration for the matrix to include a job that uses Ubuntu for the `platform` and Python 3.10 for the `version`.
-1. Add an `exclude` configuration for the matrix to remove any jobs using Python 3.6 on the Windows platform.
+1. Create a workflow from the console by selecting the **Actions** tab.
+1. Locate the worklow named "Publish Docker Container by GitHub Actions". _If this does not show up as an option, type "Publish Docker Container" into the search bar to locate it._
+1. Click **Configure**.
+1. In the workflow editor, remove any `schedule` triggers.
+1. Click **Start commit**, **Commit new file**.
+1. Go to the **Actions** tab to confirm the workflow has been triggered.
+1. Wait until the workflows complete.
+1. Go to the **Code** tab to confirm the container image has been published.
+1. Go to your profile home page at `https://github.com/YOUR_GITHUB_USER_NAME`.  Select the **Packages** tab.
+1. Confirm the container appears as a package.
+
